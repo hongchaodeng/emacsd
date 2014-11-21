@@ -3,6 +3,20 @@
 ;; This is where everything starts. Do you remember this place?
 ;; It remembers you...
 
+(require 'package)
+
+(add-to-list 'package-archives
+  '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/"))
+
+(add-to-list 'package-archives
+  '("marmalade" . "http://marmalade-repo.org/packages/"))
+
+;; Initialize all the ELPA packages (what is installed using the packages commands)
+(package-initialize)
+
 (setq live-ascii-art-logo ";;
 ;;     MM\"\"\"\"\"\"\"\"`M
 ;;     MM  mmmmmmmM
@@ -225,3 +239,27 @@
   (load custom-file))
 
 (message "\n\n Pack loading completed. Your Emacs is Live...\n\n")
+
+;; Cider &amp; nREPL
+(add-hook 'clojure-mode-hook 'turn-on-eldoc-mode)
+(setq nrepl-popup-stacktraces nil)
+(add-to-list 'same-window-buffer-names "<em>nrepl</em>")
+
+;; General Auto-Complete
+(require 'auto-complete-config)
+(setq ac-delay 0.0)
+(setq ac-quick-help-delay 0.5)
+(ac-config-default)
+
+;; ac-nrepl (Auto-complete for the nREPL)
+(require 'ac-nrepl)
+(add-hook 'cider-mode-hook 'ac-nrepl-setup)
+(add-hook 'cider-repl-mode-hook 'ac-nrepl-setup)
+(add-to-list 'ac-modes 'cider-mode)
+(add-to-list 'ac-modes 'cider-repl-mode)
+
+(global-set-key "\C-x\C-\\" 'goto-last-change)
+
+(projectile-global-mode)
+
+;; (live-set-default-font "Monaco-13")
