@@ -24,3 +24,6 @@ tramp
 tmp/*
 .smex-items
 swank/*
+
+elpa/
+projectile-bookmarks.eld
